@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>！抽獎！</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@100..900&display=swap');
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Noto Sans', 'Noto Sans HK', 'Arial', sans-serif;
+            background-color: #add8e6;
+            overflow: hidden;
+            gap: 20px;
+        }
+
+        #content {
+            display: flex;
+            overflow: hidden;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #timer-container {
+            font-size: 2rem;
+            user-select: none;
+            color: #d00000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            background-color: #ffff99;
+            padding: 1em;
+            margin: 0.5em;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border: 2px solid #ffcc00;
+            font-weight: bold;
+        }
+
+        #timer {
+            font-size: 3rem;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 1em;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.4em;
+            cursor: pointer;
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in, box-shadow 0.3s ease-in;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #20c997, #28a745);
+        }
+
+        label,
+        input {
+            font-size: 1.25em;
+            margin: 8px 0;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            width: 15em;
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+            background-color: #fff;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff6b6b;
+            outline: none;
+        }
+
+        .congrats-text {
+            padding: 1em;
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 4px 4px 6px rgba(255, 255, 255, 0.5);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <div id="timer-container">
+            <span>尚餘</span>
+            <div id="timer">! 03m 00s !</div>
+        </div>
+        <div class="form">
+            <label for="email">電郵地址 Email</label><br>
+            <input type="email" id="email" name="email">
+            <br />
+            <label for="password">密碼 Password</label>
+            <br />
+            <input type="password" id="password" name="password">
+        </div>
+        <button onclick="nextPage()">開始抽獎！！</button>
+    </div>
+
+    <script>
+        function startTimer(duration, display) {
+            let timer = duration;
+            const interval = setInterval(() => {
+                const minutes = Math.floor(timer / 60);
+                const seconds = timer % 60;
+                const str_minutes = minutes.toString().padStart(2, "0");
+                const str_seconds = seconds.toString().padStart(2, "0");
+                display.textContent = `! ${str_minutes}m ${str_seconds}s !`;
+                timer -= 1;
+                if (timer <= 0) {
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+
+        function nextPage() {
+            document.body.style.backgroundColor = 'black';
+            document.getElementById('content').innerHTML = '\
+                <div class="congrats-text">\
+                    <p>恭喜！</p>\
+                    <p>你中了大獎！</p>\
+                    三萬鑽石&#128142;&#129297;\
+                </div>\
+            ';
+        }
+
+        window.onload = function () {
+            const threeMinutes = 3 * 60;
+            const display = document.querySelector('#timer');
+            startTimer(threeMinutes, display);
+        };
+    </script>
+</body>
+
+</html>
